@@ -1,5 +1,5 @@
 {
-    "name": "zviryatko/beetroot-micro-framework-example",
+    "name": "root/www",
     "autoload": {
         "psr-4": {
             "App\\": "src/"

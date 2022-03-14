@@ -1,40 +1,48 @@
+version: '3'
+
 services:
-  php:
+
+  website:
     build: .
     volumes:
-      - './:/var/www'
-    env_file:
-      - ./.env
+      - "./:/var/www"
+    environment:
+      PHP_XDEBUG: 1
+      PHP_XDEBUG_MODE: debug
+      PHP_IDE_CONFIG: serverName=my-ide
+      PHP_XDEBUG_IDEKEY: "vscode"
+      PHP_XDEBUG_CLIENT_HOST: kubernetes.docker.internal
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.php.rule=Host(`${PROJECT_BASE_URL}`)"
-      - "traefik.http.services.php.loadbalancer.server.port=80"
+      - "traefik.http.routers.web.rule=Host(`${PROJECT_BASE_URL}`)"
+      - "traefik.http.services.web.loadbalancer.server.port=80"
+    env_file:
+      - ".env"
 
   database:
-    image: mariadb
-    environment:
-      - MARIADB_ROOT_PASSWORD=admin
-      - MARIADB_DATABASE=${MYSQL_DB_NAME}
-      - MARIADB_USER=${MYSQL_USER}
-      - MARIADB_PASSWORD=${MYSQL_PASS}
-
-  phpmyadmin:
-    image: phpmyadmin
+    image: mysql
     restart: always
     environment:
-      - PMA_ARBITRARY=1
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASS}
+      MYSQL_ROOT_PASSWORD: example
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+    restart: always
     labels:
-      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.${PROJECT_BASE_URL}`)"
-      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
+      - "traefik.http.routers.db.rule=Host(`phpmyadmin.${PROJECT_BASE_URL}`)"
+      - "traefik.http.services.db.loadbalancer.server.port=80"
+
   traefik:
-    image: "traefik:v2.6"
+    image: traefik:v2.3
     command: --api.insecure=true --providers.docker
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
+    restart: always
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-      
