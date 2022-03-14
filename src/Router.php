@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 class Router {
     private $routes = [];
     public function __construct(array $routes)
