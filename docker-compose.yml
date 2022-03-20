@@ -28,7 +28,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     links:
-      - db
+      - database
     environment:
       PMA_ARBITRARY: 1
     restart: always

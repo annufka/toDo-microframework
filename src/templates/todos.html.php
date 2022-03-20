@@ -1,4 +1,6 @@
-<h1>TODO List</h1>
+<div>
+    <h1>TODO List</h1>
+</div>
 
 <!-- 
 <form action="/todos" method="POST">

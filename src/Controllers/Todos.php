@@ -8,7 +8,7 @@ class Todos extends AbstractController {
         $vars = [];
         $entityManager = getEntityManager();
         if (!empty($_POST)) {
-            $todo = new Todo($_POST['name'], !empty($_POST['active']));
+            $todo = new Todo($_POST['new_task']);
             $entityManager->persist($todo);
             $entityManager->flush();
             $vars['new_todo'] = $todo;

@@ -23,7 +23,7 @@ class Todo {
      */
     private bool $active;
 
-    public function __construct(string $name, bool $active)
+    public function __construct(string $name, bool $active=false)
     {
         $this->name = $name;
         $this->active = $active;

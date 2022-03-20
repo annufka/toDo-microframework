@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const saveButton = document.getElementById("btn-submit");
     if (saveButton) {
-        console.log("We here!");
         saveButton.addEventListener("click", function () {
             var oReq = new XMLHttpRequest();
             let user_input = document.getElementById("user-input");
@@ -31,9 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
             user_input.value = "";
             let data = new FormData();
             data.append('new_task', newItem);
-            oReq.open("POST", "../../src/Controllers/Todos.php", true);
+            oReq.open("POST", "/todos", true);
             oReq.send(data);
-        });
+       });
     }
     // if (document.getElementById("list-will-do")) {
     //     document.getElementById("list-will-do").addEventListener("click", function (event) {
