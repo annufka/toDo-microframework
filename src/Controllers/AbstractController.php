@@ -9,7 +9,7 @@ abstract class AbstractController {
     public function viewWrapper(string $title, string $content) {
         $time = time();
         ob_start();
-        require __DIR__ . '/../templates/html.php';;
+        require __DIR__ . '/../templates/html.php';
         return ob_get_clean();
     }
 

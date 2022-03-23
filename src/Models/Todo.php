@@ -1,11 +1,13 @@
 <?php
 namespace App\Models;
 
+use JsonSerializable;
+
 /**
  * @Entity
  * @Table(name="todos")
  */
-class Todo {
+class Todo implements JsonSerializable {
     /**
      * @Id
      * @Column(name="id", type="integer")
@@ -39,5 +41,19 @@ class Todo {
 
     public function isActive(): bool {
         return $this->active;
+    }
+
+    public function jsonSerialize() {
+        return 
+        [
+            'task_id' => $this->getId(),
+            'description' => $this->getName(),
+            'done' => $this->isActive()
+        ];
+    }
+
+    public function changeActive(){
+        $active = $this->active;
+        $this->active = !$active;
     }
 }

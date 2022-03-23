@@ -2,20 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // var oReq = new XMLHttpRequest();
-    // oReq.addEventListener("load", function () {
-    //     let responce = JSON.parse(this.responseText);
-    //     if (document.getElementById("list-will-do")) { 
-    //         document.getElementById("list-will-do").innerHTML = generatePage(responce, false); 
-    //     }
-    //     if (document.getElementById("list-done")) { 
-    //         document.getElementById("list-done").innerHTML = generatePage(responce, true); 
-    //     }
-    // });
-    // let data = new FormData();
-    // oReq.open("GET", "add.php");
-    // oReq.send(data);
-
     const saveButton = document.getElementById("btn-submit");
     if (saveButton) {
         saveButton.addEventListener("click", function () {
@@ -34,16 +20,16 @@ document.addEventListener("DOMContentLoaded", function () {
             oReq.send(data);
        });
     }
-    // if (document.getElementById("list-will-do")) {
-    //     document.getElementById("list-will-do").addEventListener("click", function (event) {
-    //         actionWithItem(event);
-    //     });
-    // }
-    // if (document.getElementById("list-will-do")) {
-    //     document.getElementById("list-done").addEventListener("click", function (event) {
-    //         actionWithItem(event);
-    //     });
-    // }
+    if (document.getElementById("list-will-do")) {
+        document.getElementById("list-will-do").addEventListener("click", function (event) {
+            actionWithItem(event);
+        });
+    }
+    if (document.getElementById("list-will-do")) {
+        document.getElementById("list-done").addEventListener("click", function (event) {
+            actionWithItem(event);
+        });
+    }
 })
 
 
@@ -61,7 +47,7 @@ function generatePage(responceArray, bool) {
 function generateHTML(task) {
     let HTML = `<div class="todo-item">
                     <li class="d-flex justify-content-start align-items-center">
-                        <input id="${task['task_id']}" class="form-check-input done" type="checkbox" value="" ${Boolean(Number(task["done"])) ? "checked" : ""}>
+                        <input id="${task['task_id']}" class="form-check-input done" type="checkbox" value="${Boolean(Number(task['done'])) ? 'checked' : ''}">
                         ${task['description']}
                         <button id="${task['task_id']}" class="btn btn-delete"><i id="${task['task_id']}" class="fa fa-trash-o" style="font-size:1pem"></i></button>
                     </li>
@@ -80,10 +66,10 @@ function actionWithItem(event) {
     let data = new FormData();
     data.append('task_id', event.target.id);
     if (event.target.tagName == "INPUT") {
-        oReq.open("POST", "change.php", true);
+        oReq.open("PATCH", `/todos?id=${event.target.id}`, true);
     }
     if (event.target.tagName == "I" || event.target.tagName == "BUTTON") {
-        oReq.open("POST", "delete.php", true);
+        oReq.open("DELETE", `/todos?id=${event.target.id}`, true);
     }
     oReq.send(data);
 }

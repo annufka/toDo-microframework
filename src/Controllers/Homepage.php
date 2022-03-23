@@ -7,4 +7,5 @@ class Homepage extends AbstractController {
         $title = 'Homepage ' . time();
         return $this->viewWrapper($title, $content);
     }
+
 }
