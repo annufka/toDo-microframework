@@ -45,9 +45,10 @@ function generatePage(responceArray, bool) {
 
 
 function generateHTML(task) {
+    console.log(task);
     let HTML = `<div class="todo-item">
                     <li class="d-flex justify-content-start align-items-center">
-                        <input id="${task['task_id']}" class="form-check-input done" type="checkbox" value="${Boolean(Number(task['done'])) ? 'checked' : ''}">
+                        <input id="${task['task_id']}" class="form-check-input done" type="checkbox" value="" ${Boolean(Number(task['done'])) ? checked : ''}>
                         ${task['description']}
                         <button id="${task['task_id']}" class="btn btn-delete"><i id="${task['task_id']}" class="fa fa-trash-o" style="font-size:1pem"></i></button>
                     </li>
